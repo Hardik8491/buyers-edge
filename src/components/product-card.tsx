@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 "use client";
 import { Label } from "@/components/ui/label";
 import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
@@ -23,7 +23,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "./ui/breadcrumb";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
@@ -34,6 +34,9 @@ import { useParams } from "next/navigation";
 import { TableSkeleton } from "./skeleton";
 import { Skeleton } from "./ui/skeleton";
 import { cn } from "@/lib/utils";
+import Currency from "./currency";
+import ProductLists from "./product-lists";
+import getProducts from "@/action/get-products";
 
 // Define the types for the product and the component props
 interface Product {
@@ -51,6 +54,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   const param = useParams();
   const isLoading = false;
   const isError = false;
+  const [suggestedProducts, setSuggestedProducts] = useState<Product[]>([]);
 
   const dispatch = useDispatch();
 
@@ -61,6 +65,20 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     [dispatch]
   );
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await getProducts({
+          categoryId: product?.category?.id,
+        });
+        setSuggestedProducts(products);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  });
   const [currPreviewImgIdx, setCurrPreviewImgIdx] = useState<number>(0);
 
   return (
@@ -122,7 +140,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                   <>
                     <Image
                       alt="Product Image"
-                      className="aspect-[2/3] h-[400px] md:h-[400px] lg:h-[575px] object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
+                      className="aspect-[2/3] h-[400px] md:h-[400px] lg:h-[575px] object-scale-down object-center   border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
                       height="400"
                       src={product?.images[currPreviewImgIdx]?.url}
                       width="600"
@@ -157,7 +175,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                         <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
                       </div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">
-                        {product?.ratings} ({product?.numOfReviews} reviews)
+                        {product?.ratings || "4.3"} (
+                        {product?.numOfReviews || "890"} reviews)
                       </div>
                     </>
                   )}
@@ -168,12 +187,12 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 ) : (
                   <>
                     <div className="text-4xl font-bold">
-                      {!isLoading && `$${product?.price}`}
+                      {!isLoading && <Currency value={product?.price} />}
                     </div>
                   </>
                 )}
               </div>
-              <form className="grid gap-4 md:gap-10">
+              <div className="grid gap-4 md:gap-10">
                 {isLoading ? (
                   <Skeleton className="h-16 w-full" />
                 ) : (
@@ -299,7 +318,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                 >
                   Add to cart
                 </Button>
-              </form>
+              </div>
             </div>
           </div>
           <div className="container px-4 mx-auto py-12">
@@ -463,6 +482,10 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               </div>
             </div>
           </div>
+        </div>
+        <div className="container">
+
+          <ProductLists title="Suggested For You" text="Top picks for you" products={suggestedProducts} />
         </div>
       </section>
     </>

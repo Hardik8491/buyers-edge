@@ -34,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const router = useRouter();
   const { cart } = useSelector((state: RootState) => state.cart);
+
   // const addedProduct = cart.find((item) => item.id === product.id);
 
   return (
