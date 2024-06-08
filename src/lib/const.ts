@@ -43,12 +43,13 @@ export const menuLinks = [
 ];
 
 export const sideBarLinks = [
-  {
-    title: "",
-    url: "/",
-    icon: dark, 
-    className: "text-muted-foreground h-12 w-12 transition-colors hover:text-foreground",
-  },
+  
+  // {
+  //   title: "Buyer's Edge",
+  //   url: "/",
+  //   icon: dark, 
+  //   className: "text-muted-foreground h-12 w-12 transition-colors hover:text-foreground",
+  // },
 
   {
     title: "Dashboard",

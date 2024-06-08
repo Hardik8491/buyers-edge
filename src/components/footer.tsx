@@ -1,11 +1,10 @@
-
 import Link from "next/link";
 import Dark from "../../public/dark.svg";
 import Light from "../../public/light.svg";
 export default function Footer() {
   return (
     <footer className="bg-white py-12 dark:bg-gray-950 border-t  mt-2">
-      <div className="container mx-auto px-4 md:px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 md:px-6 grid grid-cols-1  sm:grid-cols-2 md:grid-cols-4 gap-8">
         <div className="flex flex-col gap-4">
           <Link className="flex items-center gap-2" href="#">
             <Dark className="h-12 w-12 hidden dark:block text-primary" />
@@ -218,3 +217,168 @@ function TwitterIcon(props: any) {
     </svg>
   );
 }
+
+// import Link from "next/link";
+
+// import { Input } from "./ui/input";
+// import { Button } from "./ui/button";
+// import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+
+// export default function Footer() {
+//   return (
+//     <footer className="w-full  text-black dark:border border-gray-800 dark:bg-gray-950 dark:text-gray-50 pt-12">
+//       <div className=" grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-3 xl:grid-cols-6 gap-6 px-4 md:px-6">
+//         {/* Company Info */}
+//         <div className="space-y-3 md:space-y-2 lg:space-y-3">
+//           <h4 className="text-lg font-semibold">Company Info</h4>
+//           <ul className="space-y-1.5">
+//             <FooterLink href="#" text="About Us" />
+//             <FooterLink href="#" text="Contact Us" />
+//             <FooterLink href="#" text="Privacy Policy" />
+//             <FooterLink href="#" text="Terms of Service" />
+//           </ul>
+//         </div>
+
+//         {/* Shop */}
+//         <div className="space-y-3 md:space-y-2 lg:space-y-3">
+//           <h4 className="text-lg font-semibold">Shop</h4>
+//           <ul className="space-y-1.5">
+//             <FooterLink href="#" text="Products" />
+//             <FooterLink href="#" text="Categories" />
+//             <FooterLink href="#" text="Deals" />
+//           </ul>
+//         </div>
+
+//         {/* Contact */}
+//         <div className="space-y-3 text-gray-500 md:space-y-2 lg:space-y-3">
+//           <h4 className="text-lg text-white font-semibold">Contact</h4>
+
+//           <ul className="space-y-1.5">
+//             <FooterLink
+//               href="#"
+//               text="849 north canso New York City, United State."
+//             />
+
+//             <FooterLink href="#" text="  buyersedge@hdk.com" />
+
+//             <FooterLink href="#" text="+88015-88888-9999" />
+//           </ul>
+//         </div>
+
+//         {/* Customer Service */}
+//         <div className="space-y-3 md:space-y-2 lg:space-y-3">
+//           <h4 className="text-lg font-semibold">Customer Service</h4>
+//           <ul className="space-y-1.5">
+//             <FooterLink href="#" text="FAQs" />
+//             <FooterLink href="#" text="Shipping" />
+//             <FooterLink href="#" text="Returns" />
+//           </ul>
+//         </div>
+
+//         {/* Account */}
+//         <div className="space-y-3 md:space-y-2 lg:space-y-3">
+//           <h4 className="text-lg font-semibold">Account</h4>
+//           <ul className="space-y-1.5">
+//             <FooterLink href="#" text="My Account" />
+//             <FooterLink href="#" text="Login/Register" />
+//             <FooterLink href="#" text="Cart" />
+//             <FooterLink href="#" text="Wishlist" />
+//           </ul>
+//         </div>
+//         <div className="flex flex-col gap-2">
+//           <h2 className="text-xl font-semibold  hover:text-gray-300">
+//             Download App
+//           </h2>
+
+//           <div className="text-gray-500">
+//             <div className="text-xs hover:text-gray-300">
+//               Save $3 with App New User Only
+//             </div>
+
+//             <div className="py-1 gap-2 items-center flex  flex-row  ">
+//               <div className="h-12 w-12">
+//                 <img src="qr.png " alt="" />
+//               </div>
+
+//               <div className="flex flex-col  border   ">
+//                 <img src="gl.png" height={50} width={80} alt="" />
+
+//                 <img src="al.png" height={50} width={80} alt="" />
+//               </div>
+//             </div>
+
+//             <div className="flex items-center gap-4 py-2">
+//               <span>
+//                 <Facebook className="w-6 h-6" />
+//               </span>
+
+//               <span>
+//                 <Twitter className="w-6 h-6" />
+//               </span>
+
+//               <span>
+//                 <Instagram className="w-6 h-6" />
+//               </span>
+
+//               <span>
+//                 <Linkedin className="w-6 h-6" />
+//               </span>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//       {/* Newsletter */}
+//       <div className=" hidden   py-2 items-center flex-col  ">
+//         <p className="text-sm text-gray-500 dark:text-gray-400">
+//           Subscribe to our newsletter for updates, deals, and more.
+//         </p>
+//         <div className="flex py-2 w-full max-w-md gap-1">
+//           <Input
+//             placeholder="Enter your email"
+//             className="placeholder:text-xs dark:bg-white dark:border-gray-500 dark:ring-offset-0 dark:text-gray-500"
+//             type="email"
+//           />
+//           <Button size="sm" className="text-gray-500 border ">
+//             Subscribe
+//           </Button>
+//         </div>
+//       </div>
+
+//       {/* Secondary Content */}
+//       <div className="sm:px-4 mt-2 py-2 text-gray-500 border-gray-800 border-t">
+//         {/* Secondary Links */}
+//         <ul className="flex items-center justify-center gap-8">
+//           {/* <SecondaryLink imageSrc="/sell-image-9de8ef.svg" text="Become a Seller" />
+//           <SecondaryLink imageSrc="/advertise-image-866c0b.svg" text="Advertise" />
+//           <SecondaryLink imageSrc="/gift-cards-image-d7ff24.svg" text="Gift Cards" />
+//           <SecondaryLink imageSrc="/help-centre-image-c4ace8.svg" text="Help Center" /> */}
+//           <li>© 2007-2024 BayersEdge.com</li>
+//           {/* <li><img src="/payment-method.svg" alt="Payment Methods" /></li> */}
+//         </ul>
+//       </div>
+//     </footer>
+//   );
+// }
+
+// // Footer Link component
+// function FooterLink({ href, text }: { href: any; text: any }) {
+//   return (
+//     <li>
+//       <Link href={href}>
+//         <span className="text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:text:gray-400 dark:hover:text-gray-50">
+//           {text}
+//         </span>
+//       </Link>
+//     </li>
+//   );
+// }
+
+// // Secondary Link component
+// function SecondaryLink({ imageSrc, text }: { imageSrc: any; text: any }) {
+//   return (
+//     <li className="flex items-center gap-2">
+//       <img src={imageSrc} alt={text} />
+//       <span>{text}</span>
+//     </li>
+//   );
+// }

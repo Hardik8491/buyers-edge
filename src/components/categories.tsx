@@ -66,10 +66,10 @@ const Categories = () => {
           </div>
         </main> */}
 
-        <Separator className="mb-4"/>
+        <Separator className="mb-4 my-2"/>
        
 
-        <main className="flex min-h-[calc(100vh_-_theme(spacing.02))]   flex-1 flex-col gap-4 py-4 bg-muted/40 p-4 md:gap-8">
+        <main className="flex min-h-[calc(100vh_-_theme(spacing.02))]   flex-1 flex-col gap-4 p-4  md:gap-8">
           <Carousel
             opts={{
               align: "start",
@@ -93,7 +93,7 @@ const Categories = () => {
                     prefetch={false}
                   >
                     <div className="bg-gray-100 p-4 rounded-full w-12 h-12 flex items-center justify-center dark:bg-gray-800 group-hover:bg-primary sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20">
-                      <category.icon className="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-white sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10" />
+                      <category.icon className="w-5 h-5 text-gray-500 dark:text-gray-400 dark:group-hover:text-white group-hover:text-gray-700 sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10" />
                     </div>
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-white sm:text-xs md:text-sm lg:text-base">
                       {category.label}

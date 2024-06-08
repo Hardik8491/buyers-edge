@@ -48,8 +48,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
           alt="Product Image"
           width={400}
           height={400}
-          className="w-full h-56 object-cover"
+          className="w-full h-56 md:block hidden object-cover"
         />
+        <Image
+          src={product.images[0].url}
+          alt="Product 1"
+          // width={400}
+          // height={300}
+          // className="w-full h-52 md:h-60 object-cover"
+          className=" md:hidden object-cover border aspect-square object-center w-full h-full"
+          // className="w-[200px] sm:w-[250px]  md:w-[10rem] lg:w-[250px] h-40 sm:h-64   md:h-40 lg:h-56 object-cover"
+          width={250}
+          height={250}
+        />
+
         <div className="absolute top-4 right-4">
           <Button
             variant="ghost"
@@ -67,24 +79,37 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </h3>
         <div className="flex items-center mb-2">
           <div className="flex items-center space-x-1 text-yellow-500">
+            <StarIcon className="  h-3 w-3 sm:w-4 sm:h-4  md:w-5 md:h-5" />
+            <StarIcon className="  h-3 w-3 sm:w-4 sm:h-4  md:w-5 md:h-5" />
+            <StarIcon className="  h-3 w-3 sm:w-4 sm:h-4  md:w-5 md:h-5" />
+            <StarIcon className="  h-3 w-3 sm:w-4 sm:h-4  md:w-5 md:h-5" />
+            {/* <StarIcon className="w-5 h-5" />
             <StarIcon className="w-5 h-5" />
-            <StarIcon className="w-5 h-5" />
-            <StarIcon className="w-5 h-5" />
-            <StarIcon className="w-5 h-5" />
-            <StarIcon className="w-5 h-5 text-gray-300 dark:text-gray-600" />
+            <StarIcon className="w-5 h-5" /> */}
+            <StarIcon className=" h-3 w-3 sm:w-4 sm:h-4  md:w-5 md:h-5 text-gray-300 dark:text-gray-600" />
           </div>
-          <span className="ml-2 text-gray-500 dark:text-gray-400 text-sm">
-            (23 reviews)
+          <span className="ml-2 text-gray-500 dark:text-gray-400  text-[0.5rem] sm:text-xs md:text-sm">
+            {/* (23 reviews) */}
+            (23)
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold">${product?.price}</span>
+          {/* <span className=" text-xl font-semibold sm:text-xl md:text-2xl sm:font-bold"> */}
+          <span className=" text-sm font-medium sm:text-base md:text-lg sm:font-semibold lg:text-2xl md:font-bold">
+            ${product?.price}
+          </span>
           <Button
             size="sm"
             onClick={() => handleAddToCart(product)}
-            className="bg-gray-900 dark:bg-gray-50 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+            className="bg-gray-900 hidden sm:block dark:bg-gray-50 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
           >
             Add to Cart
+          </Button>
+          <Button
+            className="sm:hidden  w-5 h-6  items-center flex justify-center  rounded-full "
+            size="icon"
+          >
+            <ShoppingBag className="h-4 w-4" />
           </Button>
         </div>
       </div>

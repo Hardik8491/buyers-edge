@@ -18,7 +18,7 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 import { Button } from "./ui/button";
-import { StarIcon } from "lucide-react";
+import { ShoppingBag, StarIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
@@ -43,14 +43,10 @@ const CarouselProduct: React.FC = () => {
   return (
     <section className="py-4 relative w-full">
       <div className="  mx-auto sm:px-4 md:px-6">
-        <div className="py-2 pb-4">
-        <Heading
-          title="Caroulas For You"
-          text="Top picks for you. Updated daily."
-        />
+        <Heading title="Today Products " text="Daily Product For You. " />
 
-        </div>
-        <Separator className="mb-4"/>
+        <Separator className="mb-4 my-2" />
+
         <main className="flex min-h-[calc(100vh_-_theme(spacing.02))]  flex-1 flex-col gap-4 py-4 bg-muted/40 p-4 md:gap-8 ">
           {isLoading && (
             <div className="flex items-center justify-center">
@@ -58,28 +54,30 @@ const CarouselProduct: React.FC = () => {
             </div>
           )}
 
-  
           <Carousel
-            plugins={[
-              Autoplay({
-                delay: 2000,
-              }),
-            ]}
-             opts={{
-              align: "start",
-              loop: true,
-            }}
+          // plugins={[
+          //   Autoplay({
+          //     delay: 2000,
+          //   }),
+          // ]}
+          // opts={{
+          //   align: "start",
+          //   loop: true,
+          // }}
           >
-            <div className="absolute -top-10  z-10 right-10">
+            <div className="absolute -top-14  z-10 right-10">
               <CarouselPrevious className="  z-10  transform -translate-y-1/2" />
-           
+
               <CarouselNext className=" z-10  transform -translate-y-1/2" />
             </div>
             <CarouselContent>
               {products &&
                 products.length > 0 &&
                 products.map((product: any) => (
-                  <CarouselItem key={product.id} className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5 gap-4 ">
+                  <CarouselItem
+                    key={product.id}
+                    className="basis-1/3 sm:basis-1/4 md:basis-1/4 lg:basis-1/4 xl:basis-1/5 2xl:basis-1/6 gap-4 "
+                  >
                     <div
                       key={product.id}
                       className="bg-white rounded-lg border overflow-hidden shadow-lg dark:bg-gray-950"
@@ -88,13 +86,17 @@ const CarouselProduct: React.FC = () => {
                         <Image
                           src={product.images[0].url || placeholder}
                           alt="Product 1"
-                          width={400}
-                          height={300}
-                          className="w-full h-52 md:h-60 object-cover"
+                          // width={400}
+                          // height={300}
+                          // className="w-full h-52 md:h-60 object-cover"
+                                className="object-cover border aspect-square object-center w-full h-full"
+                          // className="w-[200px] sm:w-[250px]  md:w-[10rem] lg:w-[250px] h-40 sm:h-64   md:h-40 lg:h-56 object-cover"
+                          width={250}
+                          height={250}
                         />
                       </Link>
                       <div className="p-4">
-                        <h3 className="font-semibold line-clamp-1 text-lg mb-2">
+                        <h3 className="font-medium md:font-semibold line-clamp-2 sm:line-clamp-1 text-base md:text-lg mb-2">
                           <Link
                             href="#"
                             className="hover:text-primary transition-colors"
@@ -104,22 +106,34 @@ const CarouselProduct: React.FC = () => {
                           </Link>
                         </h3>
                         <div className="flex items-center mb-2">
-                          <div className="flex items-center gap-0.5 text-primary">
-                            <StarIcon className="w-5 h-5 fill-current" />
-                            <StarIcon className="w-5 h-5 fill-current" />
-                            <StarIcon className="w-5 h-5 fill-current" />
-                            <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
-                            <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
+                          <div className="flex text-xs lg:text-base  items-center gap-0.5 text-primary">
+                            <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 fill-current" />
+                            <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 fill-current" />
+                            <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 fill-current" />
+
+                            <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 fill-muted stroke-muted-foreground" />
+                            <StarIcon className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 fill-muted stroke-muted-foreground" />
                           </div>
-                          <span className="text-sm text-gray-500 ml-2">
+                          <span className="text-[0.5rem]  md:text-xs text-gray-500 ml-2">
                             (23)
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-2xl font-bold">
+                          <span className=" text-sm font-medium sm:text-base md:text-lg sm:font-semibold lg:text-2xl md:font-bold">
                             ${product?.price}
                           </span>
-                          <Button size="sm">Add to Cart</Button>
+                          <Button
+                            className=" hidden sm:block text-[0.5rem] p-2  h-6 md:h-6 lg:h-9 lg:text-sm"
+                            size="sm"
+                          >
+                            Add to Cart
+                          </Button>
+                          <Button
+                            className="sm:hidden w-5 h-6  items-center flex justify-center  rounded-full "
+                            size="icon"
+                          >
+                            <ShoppingBag className="h-4 w-4" />
+                          </Button>
                         </div>
                       </div>
                     </div>

@@ -15,10 +15,10 @@ export default function Home() {
     <main className="flex  min-h-screen flex-col items-center  ">
       <Banner />
       <Categories />
-      {/* <CarouselProduct />
-      <ProductList /> */}
+      <CarouselProduct />
+      <ProductList />
 
-      {/* <Popup /> */}
+      <Popup />
     </main>
   );
 }
