@@ -18,14 +18,20 @@ export function MainNav() {
   const currentPath = usePathname(); // Use useRouter hook to get current path
 
   return (
-    <nav className="hidden   flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+    <nav className="hidden  flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
       <Link
         href="/"
         className="flex text-nowrap  mr-2 items-center gap-2 text-foreground transition-colors hover:text-foreground "
       >
-        <Dark className="h-10 w-10 text-black cursor-pointer hidden dark:block" color="" />
-        <Light className="h-8 w-8 text-black cursor-pointer dark:hidden" color="" />
-        <span className="text-xl font-bold">
+        <Dark
+          className="h-10 w-10 text-black cursor-pointer hidden dark:block"
+          color=""
+        />
+        <Light
+          className=" h-6 w-6 text-black cursor-pointer dark:hidden"
+          color=""
+        />
+        <span className=" text-base lg:text-xl font-semibold lg:font-bold">
           Buyer`s <span className="text-primary">Edge</span>
         </span>
       </Link>

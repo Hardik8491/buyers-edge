@@ -15,7 +15,7 @@ const Popup = () => {
     } else if (status === 'unauthenticated') {
       const timer = setTimeout(() => {
         setIsOpen(true);
-      }, 30000); // 1 second
+      }, 30000); // 30 seconds
 
       return () => clearTimeout(timer);
     }
@@ -33,9 +33,11 @@ const Popup = () => {
       className="fixed inset-0 flex items-center justify-center p-4 bg-opacity-50"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50"
     >
-      <div className="dark:bg-black/40 bg-gray-200/75 dark:border-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
+      <div className="bg-gray-200 dark:bg-black/40 dark:border-gray-800 p-6 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
         <div className="w-full flex justify-end items-center">
-         <span onClick={closeModal}> <X/></span>
+          <span onClick={closeModal} className="cursor-pointer">
+            <X className="w-6 h-6" />
+          </span>
         </div>
         <LoginPage />
       </div>

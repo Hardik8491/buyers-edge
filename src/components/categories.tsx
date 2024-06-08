@@ -1,6 +1,28 @@
-import React from "react";
+"use client";
+import React, {  } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
 import Link from "next/link";
-import { ShirtIcon, PenIcon, FootprintsIcon, ShoppingBagIcon, GemIcon, FlowerIcon, CircuitBoardIcon, HomeIcon, FanIcon, SunSnowIcon, BabyIcon } from "lucide-react";
+import {
+  ShirtIcon,
+  PenIcon,
+  FootprintsIcon,
+  ShoppingBagIcon,
+  GemIcon,
+  FlowerIcon,
+  CircuitBoardIcon,
+  HomeIcon,
+  FanIcon,
+  SunSnowIcon,
+  BabyIcon,
+} from "lucide-react";
+import { Separator } from "./ui/separator";
+import Heading from "./ui/heading";
 
 const categories = [
   { href: "#", icon: ShirtIcon, label: "Shirts" },
@@ -20,19 +42,12 @@ const categories = [
 const Categories = () => {
   return (
     <section className="pt-4 w-full">
-      <div className="container mx-auto sm:px-4 md:px-6">
-        <header className="flex items-center justify-between">
-          <div className="space-y-1">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Explore Our Categories
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Browse through our wide selection of product categories.
-            </p>
-          </div>
-        </header>
-        <main className="my-4 w-full py-4">
-          <div className="grid border-gray-900 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-12 gap-4 overflow-x-auto scrollbar-hide">
+      <div className=" mx-auto sm:px-4 md:px-6">
+       
+        <Heading title="Explore Our Categories" text="Browse through our wide selection of categories."/>
+      
+        {/* <main className="my-4 w-full py-4">
+          <div className="grid border-gray-900 grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-4 overflow-x-auto scrollbar-hide">
           {categories.map((category, index) => (
               <Link
                 key={index}
@@ -49,6 +64,45 @@ const Categories = () => {
               </Link>
             ))}
           </div>
+        </main> */}
+
+        <Separator className="mb-4"/>
+       
+
+        <main className="flex min-h-[calc(100vh_-_theme(spacing.02))]   flex-1 flex-col gap-4 py-4 bg-muted/40 p-4 md:gap-8">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
+            <div className="absolute -top-16 md:block hidden  z-10 right-10">
+              <CarouselPrevious className="    z-10  transform -translate-y-1/2" />
+
+              <CarouselNext className=" z-10  transform -translate-y-1/2" />
+            </div>
+            <CarouselContent>
+              {categories.map((category, index) => (
+                <CarouselItem
+                  key={index}
+                  className=" basis-1/6 sm:basis-1/12 md:basis-[10%] lg:basis-1/12 gap-4 "
+                >
+                  <Link
+                    href={category.href}
+                    className="flex flex-col items-center gap-2 group"
+                    prefetch={false}
+                  >
+                    <div className="bg-gray-100 p-4 rounded-full w-12 h-12 flex items-center justify-center dark:bg-gray-800 group-hover:bg-primary sm:w-12 sm:h-12 md:w-16 md:h-16 lg:w-20 lg:h-20">
+                      <category.icon className="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-white sm:w-6 sm:h-6 md:w-8 md:h-8 lg:w-10 lg:h-10" />
+                    </div>
+                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300 group-hover:text-white sm:text-xs md:text-sm lg:text-base">
+                      {category.label}
+                    </span>
+                  </Link>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </main>
       </div>
     </section>
@@ -57,7 +111,7 @@ const Categories = () => {
 
 export default Categories;
 
-function AccessibilityIcon(props:any) {
+function AccessibilityIcon(props: any) {
   return (
     <svg
       {...props}

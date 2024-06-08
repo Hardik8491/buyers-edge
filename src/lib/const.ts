@@ -26,13 +26,8 @@ export const menuLinks = [
     className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
   },
   {
-    title: "Categories",
+    title: "Shop",
     url: "/categories",
-    className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
-  },
-  {
-    title: "Products",
-    url: "/products",
     className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
   },
   {
