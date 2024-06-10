@@ -4,7 +4,7 @@ import Light from "../../public/light.svg";
 export default function Footer() {
   return (
     <footer className="bg-white py-12 dark:bg-gray-950 border-t  mt-2">
-      <div className="container mx-auto px-4 md:px-6 grid grid-cols-1  sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 md:px-6 grid grid-cols-1  sm:grid-cols-2 md:grid-cols-5 gap-8">
         <div className="flex flex-col gap-4">
           <Link className="flex items-center gap-2" href="#">
             <Dark className="h-12 w-12 hidden dark:block text-primary" />
@@ -76,6 +76,61 @@ export default function Footer() {
             </Link>
           </nav>
         </div>
+        <div className="grid gap-2">
+          <h3 className="font-semibold">Legal</h3>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Terms of Service
+          </Link>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Cookie Policy
+          </Link>
+        </div>
+        {/* <div className="grid gap-2">
+          <h3 className="font-semibold">Contact</h3>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Support
+          </Link>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Sales
+          </Link>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Press
+          </Link>
+          <Link
+            href="#"
+            prefetch={false}
+            className="hover:text-primary transition"
+          >
+            Partnerships
+          </Link>
+        </div> */}
         <div className="grid gap-2">
           <h4 className="text-lg font-semibold">Follow Us</h4>
           <nav className="flex items-center gap-3">
