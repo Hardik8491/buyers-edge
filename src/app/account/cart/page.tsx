@@ -15,6 +15,7 @@ import {
   MoreVertical,
   Package,
   Package2,
+  PackageOpen,
   PanelLeft,
   Search,
   Settings,
@@ -73,13 +74,13 @@ import { useSelector } from "react-redux";
 import { calculateGrandTotal } from "@/utils/calculateTotalQuatity";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { RootState } from "../../../../redux/store";
 
 const Cart = () => {
-  const {data:session ,status}=useSession();
-  console.log(status);
-  
+  const { user } = useSelector((state: RootState) => state.auth);
 
-  let email = session?.user?.email;
+  let email = user?.email;
+
   const { cart } = useSelector((state) => state?.cart);
   console.log(cart);
   const Subtotal = calculateGrandTotal(cart);
@@ -105,10 +106,10 @@ const Cart = () => {
       );
 
       const data = await response.json();
-      if (response.status === 200) {
+      if (response?.status === 200) {
         window.location.href = data.url;
       } else {
-        console.error("Unexpected response status:", response.status);
+        console.error("Unexpected response status:", response?.status);
       }
     } catch (error: any) {
       console.error("Fetch network error:", error);
@@ -116,6 +117,7 @@ const Cart = () => {
   };
 
   const dispatch = useDispatch();
+  const placeholder = "/images/placeholder.jpg";
 
   return (
     <div className="flex  border rounded-lg mx-4 my-2 flex-col sm:gap-4 sm:py-4 ">
@@ -128,95 +130,97 @@ const Cart = () => {
           Manage your cart products and view their details.
         </p>
       </header>
-      <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
-        <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-          <Tabs defaultValue="week">
-            <TabsContent value="week">
-              <Card x-chunk="dashboard-05-chunk-3">
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>ProductImage</TableHead>
+      {cart.length !== 0 ? (
+        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
+          <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
+            <Tabs defaultValue="week">
+              <TabsContent value="week">
+                <Card x-chunk="dashboard-05-chunk-3">
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>ProductImage</TableHead>
 
-                        <TableHead className="hidden md:table-cell">
-                          Product Name
-                        </TableHead>
-                        <TableHead className="hidden md:table-cell">
-                          Size
-                        </TableHead>
-                        <TableHead className="hidden md:table-cell">
-                          Color
-                        </TableHead>
-                        <TableHead className="text-right">Amount</TableHead>
-                        <TableHead>
-                          <span className="sr-only">Actions</span>
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {cart.map((product: any, index) => (
-                        <TableRow key={product.id}>
-                          <TableCell>
-                            <div>
-                              <Image
-                                alt="Product Image"
-                                className="rounded-md"
-                                height={40}
-                                src={product?.images[0]?.url}
-                                style={{
-                                  aspectRatio: "40/40",
-                                  objectFit: "contain",
-                                }}
-                                width={40}
-                              />
-                            </div>
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            {product?.name}
-                          </TableCell>
-                          <TableCell className="hidden sm:table-cell">
-                            <Badge className="text-xs" variant="secondary">
-                              XL
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            Blue
-                          </TableCell>
-                          <TableCell className="text-right">
-                            ${product?.price}
-                          </TableCell>
-                          <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  aria-haspopup="true"
-                                  size="icon"
-                                  variant="ghost"
-                                >
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">Toggle menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuItem>Edit</DropdownMenuItem>
-                                <DropdownMenuItem>Delete</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
+                          <TableHead className="hidden md:table-cell">
+                            Product Name
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Size
+                          </TableHead>
+                          <TableHead className="hidden md:table-cell">
+                            Color
+                          </TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                          <TableHead>
+                            <span className="sr-only">Actions</span>
+                          </TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-        <div>
-          <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
-            {/* <CardHeader className="flex flex-row items-start bg-muted/50">
+                      </TableHeader>
+
+                      <TableBody className="">
+                        {cart.map((product: any, index) => (
+                          <TableRow key={product.id}>
+                            <TableCell>
+                              <div>
+                                <Image
+                                  alt="Product Image"
+                                  className="rounded-md"
+                                  height={40}
+                                  src={product?.images[0]?.url || placeholder}
+                                  style={{
+                                    aspectRatio: "40/40",
+                                    objectFit: "contain",
+                                  }}
+                                  width={40}
+                                />
+                              </div>
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell">
+                              {product?.name}
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell">
+                              <Badge className="text-xs" variant="secondary">
+                                XL
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              Blue
+                            </TableCell>
+                            <TableCell className="text-right">
+                              ${product?.price}
+                            </TableCell>
+                            <TableCell>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button
+                                    aria-haspopup="true"
+                                    size="icon"
+                                    variant="ghost"
+                                  >
+                                    <MoreHorizontal className="h-4 w-4" />
+                                    <span className="sr-only">Toggle menu</span>
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+          <div>
+            <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
+              {/* <CardHeader className="flex flex-row items-start bg-muted/50">
                 <div className="grid gap-0.5">
                   <CardTitle className="group flex items-center gap-2 text-lg">
                     Order Oe31b70H
@@ -254,22 +258,26 @@ const Cart = () => {
                   </DropdownMenu>
                 </div>
               </CardHeader> */}
-            <CardContent className="p-6 text-sm">
-              <div className="grid gap-3">
-                <div className="font-semibold">Order Details</div>
-                <ul className="grid gap-3">
-                  {cart.map((product: any, index) => (
-                    <li
-                      className="flex items-center justify-between"
-                      key={index}
-                    >
-                      <span className="text-muted-foreground">
-                        {product?.name} x <span>{product?.quantity}</span>
-                      </span>
-                      <span>${product?.price}</span>
-                    </li>
-                  ))}
-                  {/* <li className="flex items-center justify-between">
+              <CardContent
+                className={`${
+                  cart.length > 0 ? "block" : "hidden"
+                } p-6 text-sm`}
+              >
+                <div className="grid gap-3">
+                  <div className="font-semibold">Order Details</div>
+                  <ul className="grid gap-3">
+                    {cart.map((product: any, index) => (
+                      <li
+                        className="flex items-center justify-between"
+                        key={index}
+                      >
+                        <span className="text-muted-foreground">
+                          {product?.name} x <span>{product?.quantity}</span>
+                        </span>
+                        <span>${product?.price}</span>
+                      </li>
+                    ))}
+                    {/* <li className="flex items-center justify-between">
                     <span className="text-muted-foreground">
                       Glimmer Lamps x <span>2</span>
                     </span>
@@ -281,29 +289,29 @@ const Cart = () => {
                     </span>
                     <span>$49.00</span>
                   </li> */}
-                </ul>
-                <Separator className="my-2" />
-                <ul className="grid gap-3">
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span>${Subtotal || 299.0}</span>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span>$5.00</span>
-                  </li>
-                  <li className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Tax</span>
-                    <span>$25.00</span>
-                  </li>
-                  <li className="flex items-center justify-between font-semibold">
-                    <span className="text-muted-foreground">Total</span>
-                    <span>${total || 329.0}</span>
-                  </li>
-                </ul>
-              </div>
-              <Separator className="my-4" />
-              {/* <div className="grid grid-cols-2 gap-4">
+                  </ul>
+                  <Separator className="my-2" />
+                  <ul className="grid gap-3">
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span>${Subtotal || 299.0}</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Shipping</span>
+                      <span>$5.00</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Tax</span>
+                      <span>$25.00</span>
+                    </li>
+                    <li className="flex items-center justify-between font-semibold">
+                      <span className="text-muted-foreground">Total</span>
+                      <span>${total || 329.0}</span>
+                    </li>
+                  </ul>
+                </div>
+                <Separator className="my-4" />
+                {/* <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-3">
                     <div className="font-semibold">Shipping Information</div>
                     <address className="grid gap-0.5 not-italic text-muted-foreground">
@@ -354,14 +362,17 @@ const Cart = () => {
                     </div>
                   </dl>
                 </div> */}
-              <Button size="default" variant="default" className="w-full" 
-                 disabled={cart.length === 0}
-                onClick={ status!=="unauthenticated" ? onCheckout : () => toast.error("login first")}
-              >
-                Checkout
-              </Button>
-            </CardContent>
-            {/* <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
+                <Button
+                  size="default"
+                  variant="default"
+                  className="w-full"
+                  disabled={cart.length === 0}
+                  onClick={user ? onCheckout : () => toast.error("login first")}
+                >
+                  Checkout
+                </Button>
+              </CardContent>
+              {/* <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
                 <div className="text-xs text-muted-foreground">
                   Updated <time dateTime="2023-11-23">November 23, 2023</time>
                 </div>
@@ -382,9 +393,22 @@ const Cart = () => {
                   </PaginationContent>
                 </Pagination>
               </CardFooter> */}
-          </Card>
-        </div>
-      </main>
+            </Card>
+          </div>
+        </main>
+      ) : (
+        <main className="flex  w-full h-full flex-1 items-center justify-center  gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 ">
+          <div className="flex w-full h-72  items-center justify-center  border rounded-lg mx-4 my-2 flex-col sm:gap-4 sm:py-4 ">
+            <span>
+              <PackageOpen height={50} width={50} className="text-xl font-semibold text-secondary"/>
+             
+            </span>
+            <p className="text-xl font-semibold text-secondary">
+              Your cart is empty
+            </p>
+          </div>
+        </main>
+      )}
     </div>
   );
 };

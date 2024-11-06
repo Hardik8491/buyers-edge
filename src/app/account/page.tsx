@@ -31,31 +31,10 @@
 //     </div>
 //   );
 // }
-"use client"
-import Image from "next/image";
+"use client";
 import Link from "next/link";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  CreditCard,
-  File,
-  Home,
-  LineChart,
-  ListFilter,
-  MoreVertical,
-  Package,
-  Package2,
-  PanelLeft,
-  Search,
-  Settings,
-  ShoppingCart,
-  Truck,
-  UploadIcon,
-  Users2,
-} from "lucide-react";
+import { UploadIcon } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -65,48 +44,14 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AccountForm } from "@/components/account-form";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
+import withAuth from "@/hoc/withAuth";
 
 const Account = () => {
-  const {data:session}=useSession();
-    return (
+  const { data: session } = useSession();
+  return (
     <div className="flex border rounded-lg mx-4 my-2 flex-col sm:gap-4 sm:py-4 ">
       <header className=" flex h-14 gap-4 flex-col border-b mb-10  bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <Breadcrumb className="hidden md:flex">
@@ -127,7 +72,10 @@ const Account = () => {
         {/* <div className="flex h-14 items-center  px-4 lg:h-[60px] lg:px-6"> */}
         <div className="flex items-center gap-4">
           <Avatar className="h-24 w-24">
-            <AvatarImage alt="Profile Image" src={session?.user?.image || "/placeholder-avatar.jpg"} />
+            <AvatarImage
+              alt="Profile Image"
+              src={session?.user?.image || "/placeholder-avatar.jpg"}
+            />
             <AvatarFallback>JP</AvatarFallback>
           </Avatar>
 
@@ -149,4 +97,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default withAuth(Account);

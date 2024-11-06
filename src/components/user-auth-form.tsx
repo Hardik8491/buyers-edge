@@ -11,11 +11,30 @@ import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axios from "axios";
+import { useLoginMutation } from "../../redux/features/authApi";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isEmailLoading, setIsEmailLoading] = React.useState<boolean>(false);
+  const [Login, { isError, data, isLoading, error, isSuccess }] =
+    useLoginMutation();
+  useEffect(() => {
+    if (isSuccess) {
+      const message = data?.message || "Login successful";
+      toast.success(message);
+
+      router.push("/");
+    }
+    if (error) {
+      if ("data" in error) {
+        const ErrorData = error as any;
+        toast.error(ErrorData.data.message);
+      }
+    }
+  }, [data?.message, error, isSuccess]);
+
   const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const [user, setUser] = React.useState({
@@ -28,20 +47,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     try {
       event.preventDefault();
       setIsEmailLoading(true);
-      const response = await signIn("credentials", {
-        email: user.email,
-        password: user.password,
-        redirect: false,
-      });
-      console.log(response);
-      if (response?.status === 200 || response?.ok === true) {
-        console.log("Login success", response?.ok);
-        toast.success("Login success");
-        router.push("/account");
-      } else {
-        toast.error("Login failed");
-        return;
-      }
+
+      await Login(user);
     } catch (error: any) {
       console.log("Login failed", error.message);
       toast.error(error.message);

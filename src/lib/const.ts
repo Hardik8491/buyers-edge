@@ -53,25 +53,25 @@ export const sideBarLinks = [
 
   {
     title: "Dashboard",
-    url: "/dashboard",
+    url: "/account/dashboard",
     icon: LayoutDashboard,
     className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
   },
   {
     title: "Orders",
-    url: "/orders",
+    url: "/account/orders",
     icon: ListOrdered, // Add icon if desired
     className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
   },
   {
     title: "Products",
-    url: "/products",
+    url: "/account/products",
     icon: Package2, // Add icon if desired
     className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
   },
   {
     title: "Customers",
-    url: "/customers",
+    url: "/account/customers",
     icon: UsersRound, // Add icon if desired
     className: "text-muted-foreground h-6 w-6 transition-colors hover:text-foreground",
   },

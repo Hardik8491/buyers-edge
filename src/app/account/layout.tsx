@@ -13,38 +13,58 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import ProtectedRoute from "@/helpers/protectRoute";
 
+import withAuth from "@/hoc/withAuth";
+import { RootState } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutQuery } from "../../../redux/features/authApi";
+import { useState } from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const { data: session } = useSession();
-
+  const [logout, setLogout] = useState(false);
+  const {} = useLogoutQuery(undefined, {
+    skip: !logout ? true : false,
+  });
   const handleLogOut = async () => {
     try {
-      await signOut();
-      router.push("/");
-      toast.success("Logout Successful !");
-    } catch (error) {}
+      setLogout(true);
+      router.push("/")
+      toast.success("Logout Successful!");
+    
+    } catch (error) {
+      console.log(error);
+      toast.error("error is occur");
+    }
   };
+
+  const { user } = useSelector((state: RootState) => state.auth);
+  console.log(user);
+
   return (
-    <ProtectedRoute>
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Avatar>
               <AvatarImage
-                src={session?.user?.image || "https://github.com/shadcn.png"}
+                src={
+                  user?.avatar ||
+                  session?.user?.image ||
+                  "https://github.com/shadcn.png"
+                }
               />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>
+                {user?.firstName + user?.lastName}
+              </AvatarFallback>
             </Avatar>
 
             <small className=" flex flex-col items-start ml-3 gap-1 text-sm font-medium leading-none">
-              <div className="text-sm font-medium"> Welcome</div>
-              Email address
+              <div className="text-sm font-medium capitalize"> Welcome</div>
+              {user?.firstName + " " + user?.lastName}
             </small>
           </div>
           <div className="flex-1">
@@ -120,7 +140,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </div>
     </div>
-    </ProtectedRoute>
   );
 };
 

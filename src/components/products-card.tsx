@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader } from "./ui/card-product";
 import { Button } from "./ui/button";
 import Currency from "./currency";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 // Define the type for the product and component props
 interface Product {
@@ -25,12 +26,16 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  height?: number;
+  width?: number;
   handleAddToCart: (product: Product) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   handleAddToCart,
+  height,
+  width,
 }) => {
   const router = useRouter();
   const { cart } = useSelector((state: RootState) => state.cart);
@@ -46,8 +51,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <Image
           src={product.images[0].url}
           alt="Product Image"
-          width={400}
-          height={400}
+          width={width || 400}
+          height={height || 400}
           className="w-full h-56 md:block hidden object-cover"
         />
         <Image
@@ -58,8 +63,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           // className="w-full h-52 md:h-60 object-cover"
           className=" md:hidden object-cover border aspect-square object-center w-full h-full"
           // className="w-[200px] sm:w-[250px]  md:w-[10rem] lg:w-[250px] h-40 sm:h-64   md:h-40 lg:h-56 object-cover"
-          width={250}
-          height={250}
+          width={width || 250}
+          height={height || 250}
         />
 
         <div className="absolute top-4 right-4">
@@ -74,9 +79,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-semibold line-clamp-1 mb-2">
+    <Link href={`/product/${product.id}`}>
+    <h3 className="text-lg  cursor-pointer font-semibold line-clamp-1 mb-2 hover:text-primary transition-colors">
           {product.name}
         </h3>
+        </Link>
         <div className="flex items-center mb-2">
           <div className="flex items-center space-x-1 text-yellow-500">
             <StarIcon className="  h-3 w-3 sm:w-4 sm:h-4  md:w-5 md:h-5" />

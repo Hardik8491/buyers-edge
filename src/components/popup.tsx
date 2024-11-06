@@ -9,18 +9,6 @@ const Popup = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (status === 'authenticated') {
-      setIsOpen(false);
-    } else if (status === 'unauthenticated') {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 30000); // 30 seconds
-
-      return () => clearTimeout(timer);
-    }
-  }, [status]);
-
   const closeModal = () => {
     setIsOpen(false);
   };

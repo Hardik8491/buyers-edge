@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { signIn } from "next-auth/react";
+import { useRegisterMutation } from "../../../redux/features/authApi";
+
 interface UserAuthRegisterFormProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -28,14 +30,35 @@ export function UserAuthRegisterForm({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [register, { isError, data, error, isSuccess }] =
+    useRegisterMutation();
+
+  React.useEffect(() => {
+    if (isSuccess) {
+      const message =
+        data?.message ||
+        "Registration successful! Please check your email for activation link";
+      toast.success(message);
+      toast.success(
+        "Registration successful! Please check your email for activation link"
+      );
+      router.push("/verification");
+    }
+    if (error) {
+      if ("data" in error) {
+        const ErrorData = error as any;
+        toast.error(ErrorData.data.message);
+      }
+    }
+  }, [data?.message, error, isSuccess, useRouter]);
   async function onSubmit(event: React.SyntheticEvent) {
     try {
       event.preventDefault();
       setIsLoading(true);
-      const response = await axios.post("/api/auth/user/signup", user);
-      toast.success("Register Successful !");
-    
-      router.push("/auth/login");
+     
+      await register(user);
+
+     
     } catch (error: any) {
       console.log("SignUp failed", error.message);
 
@@ -165,7 +188,12 @@ export function UserAuthRegisterForm({
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" disabled={isLoading} onClick={handleGoogleLogin}>
+      <Button
+        variant="outline"
+        type="button"
+        disabled={isLoading}
+        onClick={handleGoogleLogin}
+      >
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (

@@ -1,4 +1,4 @@
-//@ts-nocheck
+
 "use client";
 import React, { useCallback, useEffect } from "react";
 import Autoplay from "embla-carousel-autoplay";
@@ -6,7 +6,6 @@ import Heading from "./ui/heading";
 import { useGetProductsQuery } from "../../slices/productSlices";
 import ProductCard from "./products-card";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/features/cartSlice";
 import Loading from "@/app/loading";
 import { Product } from "@/lib/types";
 import NewPRoduct from "./product-card_new";
@@ -22,11 +21,11 @@ import { ShoppingBag, StarIcon } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Separator } from "./ui/separator";
+import { addToCart } from "../../redux/features/cartSlice";
 
 const CarouselProduct: React.FC = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();
   const dispatch = useDispatch();
-  console.log(products);
 
   useEffect(() => {
     refetch();
@@ -35,6 +34,8 @@ const CarouselProduct: React.FC = () => {
 
   const handleAddToCart = useCallback(
     ({ id, name, price, images }: Product) => {
+      console.log(id,name,price,images);
+      
       dispatch(addToCart({ id, name, price, images, quantity: 1 }));
     },
     [dispatch]
@@ -82,14 +83,14 @@ const CarouselProduct: React.FC = () => {
                       key={product.id}
                       className="bg-white rounded-lg border overflow-hidden shadow-lg dark:bg-gray-950"
                     >
-                      <Link href="#" className="block" prefetch={false}>
+                      <Link href={`product/${product.id}`} className="block" prefetch={false}>
                         <Image
                           src={product.images[0].url || placeholder}
                           alt="Product 1"
                           // width={400}
                           // height={300}
                           // className="w-full h-52 md:h-60 object-cover"
-                                className="object-cover border aspect-square object-center w-full h-full"
+                          className="object-cover border aspect-square object-center w-full h-full"
                           // className="w-[200px] sm:w-[250px]  md:w-[10rem] lg:w-[250px] h-40 sm:h-64   md:h-40 lg:h-56 object-cover"
                           width={250}
                           height={250}
@@ -98,7 +99,7 @@ const CarouselProduct: React.FC = () => {
                       <div className="p-4">
                         <h3 className="font-medium md:font-semibold line-clamp-2 sm:line-clamp-1 text-base md:text-lg mb-2">
                           <Link
-                            href="#"
+                            href={`product/${product.id}`}
                             className="hover:text-primary transition-colors"
                             prefetch={false}
                           >
@@ -123,6 +124,7 @@ const CarouselProduct: React.FC = () => {
                             ${product?.price}
                           </span>
                           <Button
+                            onClick={()=>handleAddToCart(product)}
                             className=" hidden sm:block text-[0.5rem] p-2  h-6 md:h-6 lg:h-9 lg:text-sm"
                             size="sm"
                           >

@@ -1,15 +1,16 @@
-//@ts-nocheck
+
 "use client";
 import React, { useCallback, useEffect } from "react";
 import Heading from "./ui/heading";
 import { useGetProductsQuery } from "../../slices/productSlices";
 import ProductCard from "./products-card";
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/features/cartSlice";
+
 import Loading from "@/app/loading";
 import { Product } from "@/lib/types";
 import NewPRoduct from "./product-card_new";
 import { Separator } from "./ui/separator";
+import { addToCart } from "../../redux/features/cartSlice";
 
 const ProductList: React.FC = () => {
   const { data: products, isLoading, error, refetch } = useGetProductsQuery();

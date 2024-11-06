@@ -1,5 +1,5 @@
-
-
+"use client"
+import redirectIfAuthenticated from '@/components/redirectIfAuthenticated'
 import { UserAuthRegisterForm } from '@/components/ui/usr-register-form'
 import Link from 'next/link'
 import React from 'react'
@@ -24,4 +24,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default redirectIfAuthenticated(Register);

@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 "use client";
 import { Label } from "@/components/ui/label";
 import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
@@ -26,7 +26,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/features/cartSlice";
+
 
 import { Metadata } from "next";
 import { StarIcon } from "lucide-react";
@@ -37,6 +37,7 @@ import { cn } from "@/lib/utils";
 import Currency from "./currency";
 import ProductLists from "./product-lists";
 import getProducts from "@/action/get-products";
+import { addToCart } from "../../redux/features/cartSlice";
 
 // Define the types for the product and the component props
 interface Product {
