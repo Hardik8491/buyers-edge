@@ -119,5 +119,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 
 <p align="center">
-  Made with ❤️ by the BuyersEdge Team
+  Made with ❤️ by the Hardik Bhammar
 </p>
